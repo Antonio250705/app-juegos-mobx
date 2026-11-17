@@ -1,0 +1,126 @@
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  color: #fff4d6;
+  background: radial-gradient(circle at 30% 20%, #7a0f1a, #1a0508 70%);
+  background-attachment: fixed;
+}
+
+.escena { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 1rem; perspective: 1000px; }
+
+.cabecera { text-align: center; }
+.cabecera h1 {
+  margin: .5rem 0;
+  font-size: clamp(1.8rem, 6vw, 3rem);
+  background: linear-gradient(90deg, #ff3b30, #ffc400, #ff8a00);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.pestanas { display: flex; gap: .6rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1rem; }
+.pestana {
+  padding: .6rem 1.2rem;
+  font-weight: 700;
+  color: #fff4d6;
+  background: rgba(255, 255, 255, .08);
+  border: 2px solid #ff8a00;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform .15s, background .2s;
+}
+.pestana:hover { transform: translateY(-2px); }
+.pestana.seleccionada { color: #3a0a0a; background: linear-gradient(135deg, #ffc400, #ff8a00); }
+
+.contenido { display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; align-items: flex-start; width: 100%; }
+
+.tarjeta, .marcador {
+  padding: 1.6rem;
+  text-align: center;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, .07);
+  border: 2px solid #ffc400;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, .6), 0 0 40px rgba(255, 196, 0, .35);
+}
+.tarjeta { width: min(92vw, 480px); animation: flota 4s ease-in-out infinite; }
+.marcador { width: min(92vw, 240px); }
+.marcador h2, .juego h2 { margin-top: 0; color: #ffc400; }
+
+@keyframes flota {
+  0%, 100% { transform: rotateX(6deg) translateY(0); }
+  50% { transform: rotateX(2deg) translateY(-10px); }
+}
+
+.info { color: #ffc400; }
+
+.numero {
+  font-size: clamp(2rem, 8vw, 3.2rem);
+  font-weight: 800;
+  letter-spacing: .15em;
+  word-break: break-all;
+  color: #ffc400;
+  text-shadow: 0 4px 0 #b3261e, 0 10px 20px rgba(0, 0, 0, .6);
+}
+
+.barra { height: 10px; margin-top: 1.2rem; background: rgba(255, 255, 255, .15); border-radius: 6px; overflow: hidden; }
+.barra-tiempo { height: 100%; background: linear-gradient(90deg, #ff3b30, #ff8a00, #ffc400); animation: vaciar linear forwards; }
+@keyframes vaciar { from { width: 100%; } to { width: 0; } }
+
+input {
+  display: block;
+  width: 100%;
+  margin: .8rem 0 1rem;
+  padding: .8rem;
+  font-size: 1.6rem;
+  text-align: center;
+  color: #fff4d6;
+  background: rgba(0, 0, 0, .4);
+  border: 2px solid #ff8a00;
+  border-radius: 12px;
+}
+input:focus { outline: 3px solid #ffc400; }
+
+.rejilla { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 1.2rem 0; }
+.celda {
+  aspect-ratio: 1;
+  border: 2px solid #ff8a00;
+  border-radius: 14px;
+  background: rgba(0, 0, 0, .35);
+  cursor: pointer;
+  transition: background-color .5s ease-in-out, transform .15s, box-shadow .3s;
+}
+.celda:disabled { cursor: default; }
+.celda:not(:disabled):hover { transform: translateY(-3px); }
+.celda.activa { background: linear-gradient(135deg, #ffc400, #ff3b30); box-shadow: 0 0 28px #ffc400; transition-duration: .1s; }
+
+.estado { min-height: 1.6em; font-weight: 700; }
+.mensaje { font-size: 1.4rem; font-weight: 800; }
+.mensaje.ok { color: #7dff9b; }
+.mensaje.mal { color: #ff6b5e; }
+
+.boton {
+  padding: .8rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #3a0a0a;
+  background: linear-gradient(135deg, #ffc400, #ff8a00);
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 0 6px 0 #b3261e;
+  transition: transform .1s, box-shadow .1s;
+}
+.boton.pequeno { padding: .4rem 1rem; font-size: .9rem; box-shadow: 0 4px 0 #b3261e; }
+.boton:hover { transform: translateY(-2px); }
+.boton:active { transform: translateY(4px); box-shadow: 0 2px 0 #b3261e; }
+.boton:focus-visible, .celda:focus-visible, .pestana:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+
+.pie { margin-top: auto; padding: 1.5rem 0 .5rem; color: #ffc400; opacity: .8; }
+
+@media (prefers-reduced-motion: reduce) {
+  .tarjeta { animation: none; }
+  .barra-tiempo { animation-duration: 0s !important; }
+}
